@@ -1,0 +1,526 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Create New Cook Book</h1>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .baslik {
+            width: 97%;
+            max-width: 1500px;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .baslik .btn-container {
+            display: flex;
+            justify-content: right;
+            gap: 1px;
+            margin-top: -80px;
+            margin-left: 500px;
+        }
+
+        .baslik .btn {
+            width: 10%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-right: 100px;
+        }
+
+        .baslik .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        
+
+        .form-container .form-group {
+            margin-bottom: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-container .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-container .form-group input,
+        .form-container .form-group textarea {
+            width: 30%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 12px; /* Küçültülmüş font boyutu */
+        }
+
+        .form-container .form-group input:focus,
+        .form-container .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-container .form-group .title-input {
+            font-size: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            margin-left: 80px;
+            margin-top: -30px;
+        }
+
+        .form-container .form-group .description-input {
+            font-size: 12px;
+            margin-right: 130px;
+            width: 50%;
+            height: 10px;
+            margin-bottom: 4px;
+        }
+        
+        .form-container .description-container {
+            display: flex;
+            gap: 20px; /* Görsel ve reçete alanı arasındaki boşluk */
+            align-items: flex-start; /* Üstten hizalama */
+        }
+
+        .form-container .image-upload {
+            flex: 1; /* Alanın eşit bir şekilde dağılmasını sağlar */
+            max-width: 250px; /* Görsel alanının genişliği */
+        }
+
+        .description-container .image-upload img {
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+        }
+
+        .form-container .description-area {
+            gap: 10px;
+            margin-left: 30px;
+            margin-right: -50px;
+        }
+        
+
+        .form-container .btn {
+            display: block;
+            width: 7%;
+            padding: 1px;
+            border: none;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 5px;
+            margin-left: 1100px;
+        }
+
+        .form-container .btn:hover {
+            background-color: #0056b3;
+        }
+
+
+        .tutar-container {
+            margin-bottom: 50px;
+            display: flex; /* Flexbox kullanarak yatay hizalama sağlar */
+            justify-content: space-between; /* Öğeler arasındaki boşluğu ayarlar */
+            align-items: center; /* Yükseklik hizalamasını ortalar */
+            width: 100%; /* Tüm genişliği kapsar */
+            max-width: 600px; /* Genişliği sınırlayabilirsiniz */
+            margin-left: 200px; /* Margin sol kenarını sıfırlar */
+            padding: 0 20px; /* Sol ve sağ padding ekler */
+        }
+        
+        .tutar-container h3 {
+            margin-right: 25px; /* Margin sıfırlanır */
+            font-size: 15px; /* Font boyutunu ayarlayabilirsiniz */
+            color: #333; /* Renk ayarı */
+            margin-left: -40px;
+        }
+
+        .tutar-container span {
+            display: inline-block;
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        .time-container {
+            margin-top: 1px;
+            display: flex;
+            flex-direction: row;
+            margin-left: 15px;
+            gap: -50px;
+        }
+
+        
+        .time-container .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+            margin-left: 20px;
+            gap: 1px;
+            width: 10%;
+        }
+        
+        .time-container .form-group label {
+            margin-bottom: 10px; 
+            margin-right: 25px;
+        }
+
+        .cost-container {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: row;
+            margin-left: 350px;
+            
+        }
+
+        
+        .cost-container .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+            margin-left: 15px;
+            gap: 10px;
+        }
+
+        .cost-container .form-group label {
+            width: 70%;
+            margin-bottom: 10px; 
+            margin-left: -25px;
+            text-align: center;
+        }
+        
+
+        {#.time-container .form-group input {
+            width: 30px;
+            display: flex;
+            flex-direction: row;
+            gap: 1px;
+        }#}
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            margin-bottom: 10px;
+            margin-left: 80px;
+        }
+
+        .item-row input {
+            width: 80px; /* Küçültülmüş input genişliği */
+        }
+
+        .image-upload {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 0 auto;
+            margin-left: 30px;
+            margin-top: 10px;
+            overflow: hidden;
+            background-color: #f7f7f7;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-upload label {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .description-area textarea {
+            max-width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            resize: none;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+
+        .additional-info-container {
+            margin-top: 20px;
+            
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 30px;
+        }
+        
+        .additional-info-container h3 {
+            margin-top: 0;
+        }
+
+        .additional-info-container .info-section {
+            margin-bottom: 20px;
+        }
+
+        .additional-info-container .info-section label {
+            font-weight: bold;
+        }
+
+        .additional-info-container .info-section .textarea {
+            margin-bottom: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 12px;
+            margin-right: 150px;
+            width: 100%;
+            height: 165px;
+            
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            width: 150px; /* Resmin genişliğini küçültmek için */
+            margin-right: 1300px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="baslik">
+        <div class="image-container">
+            <h1><img src="{{ asset('images/QAPERA1.png') }}" alt="Cook Book Image"></h1>
+            <div class="btn-container">
+                <a href="{{ path('app_new_cook_book') }}" class="btn">Yemek Kitabı</a>
+                <a href="{{ path('app_new_cook_book_categories') }}" class="btn">Kategoriler</a>
+                <a href="{{ path('app_log_in') }}" class="btn">Çıkış Yap</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.title, 'Ürün Adı') }}
+                    {{ form_widget(form.title, { 'attr': { 'class': 'title-input' } }) }}
+                </div>
+                <div class="description-container"> <!-- Yanyana getirmek için container -->
+                    <div class="image-upload">
+                        <div class="form-group">
+                            {{ form_label(form.imageFile) }}
+                            {{ form_widget(form.imageFile) }}
+                        </div>
+                    </div>
+                    <div class="form-group description-area">
+                        {{ form_label(form.description, 'Ürün Reçetesi') }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div id="item-rows">
+                        <div class="item-row">
+                            <div class="form-group">
+                                <label for="quantity">Miktar</label>
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                                <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="unit_price">Birim Fiyat</label>
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                                <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="total">Tutar</label>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                                <input type="text" id="total" name="total[]" class="total" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-row" class="btn">Satır Ekle</button>
+
+                <div class="time-container">
+                    <div class="form-group">
+                        {{ form_label(form.time1, 'Hazırlık Süresi') }}
+                        {{ form_widget(form.time1) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.time2, 'Pişirme Süresi') }}
+                        {{ form_widget(form.time2) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.time3, 'Servis Süresi') }}
+                        {{ form_widget(form.time3) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.category) }}
+                        {{ form_widget(form.category) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.size) }}
+                        {{ form_widget(form.size) }}
+                    </div>
+                    <div class="tutar-container">
+                        <h3>Tabak Ağırlığı: <span id="plate_weight">0</span></h3>
+                        <h3>Toplam Tutar: <span id="total_sum">0</span></h3>
+                    </div>
+                </div>
+                <div class="additional-info-container">
+                    
+                <div class="cost-container">
+                    <div class="form-group">
+                        {{ form_label(form.total) }}
+                        {{ form_widget(form.total) }}
+                    {#  {{ form.total.vars.id }}  
+                        {{ form.total.vars.name }}  #}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.recommend_price) }}
+                        {{ form_widget(form.recommend_price) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.cost_percentage) }}
+                        {{ form_widget(form.cost_percentage) }}
+                    </div>
+                </div>
+                <div class="info-section">
+                    {#
+                        <label for="preparation">Hazırlanışı</label>
+                        <textarea id="preparation" name="preparation" placeholder="Hazırlanış adımlarını buraya yazın..."></textarea>
+                    #}
+                        {{ form_label(form.preparing, 'Hazırlanışı') }}
+                        {{ form_widget(form.preparing, {'attr': {'class': 'textarea'}}) }}
+                    </div>
+                    <div class="info-section">
+                        {{ form_label(form.service, 'Sunum Şekli') }}
+                        {{ form_widget(form.service, {'attr': {'class': 'textarea'}}) }}
+                    </div>
+                    
+                </div>
+                <button class="btn">{{ button_label|default('Kaydet') }}</button>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        document.getElementById('add-row').addEventListener('click', function() {
+            const itemRow = document.createElement('div');
+            itemRow.classList.add('item-row');
+            itemRow.innerHTML = `
+                <div class="form-group">
+                    <textarea id="description" name="description[]" class="description-input"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="quantity" name="quantity[]" class="quantity" step="any">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="unit_price" name="unit_price[]" class="unit_price" step="any">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="total" name="total[]" class="total" readonly>
+                </div>
+            `;
+            document.getElementById('item-rows').appendChild(itemRow);
+            updateTotals();
+        });
+
+        document.getElementById('item-rows').addEventListener('input', function(e) {
+            if (e.target.classList.contains('quantity') || e.target.classList.contains('unit_price')) {
+                // Miktar veya birim fiyat girdisi değiştiğinde toplamları güncelle
+                updateTotals();
+            }
+        });
+        
+
+        function updateTotals() {
+            const quantityInputs = document.querySelectorAll('.quantity');
+            const unitPriceInputs = document.querySelectorAll('.unit_price');
+            const totalInputs = document.querySelectorAll('.total');
+            let grandTotal = 0;
+            let plateWeight = 0;
+
+            quantityInputs.forEach((qtyInput, index) => {
+                const quantity = parseFloat(qtyInput.value) || 0;
+                const unitPrice = parseFloat(unitPriceInputs[index].value) || 0;
+                const total = quantity * unitPrice;
+
+                totalInputs[index].value = total.toFixed(2);
+                grandTotal += total;
+                plateWeight += quantity;
+            });
+
+            document.getElementById('total_sum').textContent = grandTotal.toFixed(2);
+            document.getElementById('plate_weight').textContent = plateWeight.toFixed(2);
+
+            const cost = grandTotal;
+            const recommendedPrice = grandTotal * 4; // Tavsiye edilen satış fiyatı toplam tutarın 4 katı
+
+            document.getElementById('new_cook_book_total').value = cost.toFixed(2);
+            document.getElementById('new_cook_book_recommend_price').value = recommendedPrice.toFixed(2);
+            document.getElementById('new_cook_book_cost_percentage').value = ((recommendedPrice / cost - 1) * 100).toFixed(2);
+
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,206 @@
+{# templates/newCookBook/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Kategori - {{ category.name }}{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: left;
+            color: #333;
+        }
+
+        .baslik {
+            width: 97%;
+            max-width: 1500px;
+            margin: 0 auto 30px auto; /* Alt tarafa 20px boşluk ekledik */
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+         .baslik .btn-container {
+            display: flex;
+            justify-content: center; /* Butonları ortalamak için */
+            gap: 20px; /* Butonlar arasında boşluk bırakmak için */
+            margin-top: -80px;
+            margin-left: 150px;
+        }
+
+        .baslik .btn {
+            width: 10%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-right: 100px;
+            margin-top: 1px;
+        }
+
+        .baslik .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: block;
+            width: 95%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .recipe-list {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .recipe-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .recipe-list li {
+            margin-bottom: 10px;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            width: 150px; /* Resmin genişliğini küçültmek için */
+            margin-right: 1300px;
+        }
+
+        .recipe-list img {
+            max-width: 150px;  /* Resmin genişliğini 150 piksel ile sınırlandır */
+            height: auto;      /* Oranları koruyarak yüksekliği otomatik ayarlar */
+        }
+
+        .recipe-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .recipe-card {
+            background-color: #00bfff;
+            color: white;
+            width: 250px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .recipe-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .recipe-card .times {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .recipe-card .title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .recipe-card .recommend-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            
+            padding: 5px;
+            border-radius: 4px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="baslik">
+    <div class="image-container">
+        <h1><img src="{{ asset('images/QAPERA1.png') }}" alt="Cook Book Image"></h1>
+    </div>
+    <div class="btn-container">
+            <a href="{{ path('app_new_cook_book') }}" class="btn">Yemek Kitabı</a>
+            <a href="{{ path('app_new_cook_book_categories') }}" class="btn">Kategoriler</a>
+            <a href="{{ path('app_new_cook_book') }}" class="btn">Çıkış Yap</a>
+    </div>
+    </div>
+
+    
+     
+
+    
+    <div class="recipe-list">
+        {% for newCookBook in newCookBooks %}
+            <div class="recipe-card">
+                {% if newCookBook.imageFile %}
+                    <img src="{{ asset('uploads/images/' ~ newCookBook.imageFile) }}" alt="{{ newCookBook.title }} Image">
+                {% endif %}
+                <div class="times">
+                    <span><img src="{{ asset('images/pngwing.com.png') }}" alt="Cook Book Image"></span><span>{{ newCookBook.time1 }} Dk</span>
+                    <span><img src="{{ asset('images/tencere.png') }}" alt="Cook Book Image"></span><span>{{ newCookBook.time2 }} Dk</span>
+                    <span><img src="{{ asset('images/servis.png') }}" alt="Cook Book Image"></span><span>{{ newCookBook.time3 }} Dk</span>
+                </div>
+                <div class="title">{{ newCookBook.title }}</div>
+                <div class="recommend-price">₺ {{ newCookBook.recommendPrice }}</div> {#Eğer recommend_price alanını TextType olarak formda kullanıyorsanız,
+                                                                                    Twig şablonunda da aynı isimle (recommendPrice) kullanmanız gerekir. 
+                                                                                    Form alanlarını doğru şekilde geçirdiğinizden emin olun.#}
+            </div>
+        {% endfor %}
+        <a href="{{ path('app_new_cook_book_categories') }}" class="btn">Kategorilere Dön</a>
+    </div>
+
+    
+    
+{% endblock %}

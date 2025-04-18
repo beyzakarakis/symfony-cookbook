@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+{% block content%}
+    <h1>Create New Cook Book</h1>
+{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+
+        .form-container .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .form-container .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 95%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            width: 150px; /* Resmin genişliğini küçültmek için */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    
+   <div class="form-container">
+    <div class="image-container">
+        <h1><img src="{{ asset('images/QAPERA1.png') }}" alt="Cook Book Image"></h1>
+    </div>
+    {% for message in app.flashes('success') %}
+                <div style="background-color: lightgreen; padding: 10px; margin-bottom: 10px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password) }}
+            </div>
+            <button class="btn">{{ button_label|default('Giriş Yap') }}</button>
+            {#
+            <a href="{{ path('app_create_new_cook_book') }}" class="btn">
+                {{ button_label|default('Giriş Yap') }}
+            </a>#}
+            {% for message in app.flashes('error') %}
+                <div style="background-color: red; padding: 10px; margin-bottom: 10px; margin-top:10px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

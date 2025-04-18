@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kategoriler{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .baslik {
+            width: 97%;
+            max-width: 1500px;
+            margin: 0 auto 30px auto; /* Alt tarafa 20px boşluk ekledik */
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .baslik .btn-container {
+            display: flex;
+            justify-content: center; /* Butonları ortalamak için */
+            gap: 20px; /* Butonlar arasında boşluk bırakmak için */
+            margin-top: -80px;
+            margin-left: 150px;
+        }
+
+        .baslik .btn {
+            width: 10%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-right: 150px;
+            margin-top: 1px;
+        }
+
+        .baslik .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+
+        .form-container {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: auto;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .recipe-list {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .recipe-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .recipe-list li {
+            margin-bottom: 10px;
+        }
+
+        .category-buttons {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .category-buttons form {
+            display: inline-block;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            width: 150px; /* Resmin genişliğini küçültmek için */
+            margin-right: 1300px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="baslik">
+    <div class="image-container">
+        <h1><img src="{{ asset('images/QAPERA1.png') }}" alt="Cook Book Image"></h1>
+    </div>
+    <div class="btn-container">
+            <a href="{{ path('app_new_cook_book') }}" class="btn">Yemek Kitabı</a>
+            <a href="{{ path('app_new_cook_book') }}" class="btn">Çıkış Yap</a>
+    </div>
+    </div>
+    <div class="recipe-list">
+        
+        <h2>Categories</h2>
+        <div class="category-buttons">
+            {% for category in categories %}
+                <form method="get" action="{{ path('app_new_cook_book_id', { 'id': category.id }) }}">
+                    <button type="submit" class="btn">{{ category.name }}</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

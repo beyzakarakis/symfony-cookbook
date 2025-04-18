@@ -1,0 +1,360 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CookBook Index{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .baslik {
+            width: 97%;
+            max-width: 1500px;
+            margin: 0 auto 30px auto; /* Alt tarafa 20px boşluk ekledik */
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .baslik .btn-container {
+            display: flex;
+            justify-content: center; /* Butonları ortalamak için */
+            gap: 20px; /* Butonlar arasında boşluk bırakmak için */
+            margin-top: -80px;
+            margin-left: 150px;
+        }
+
+        .baslik .btn {
+            width: 10%;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-right: 150px;
+            margin-top: 1px;
+        }
+
+        .baslik .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+
+        .form-container {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: auto;
+            padding: 10px;
+            border: none;
+            background-color: #00bfff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .buton {
+            width: 20%;
+            height: 30px;
+            background-color: #00bfff;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: center;
+            margin: auto;
+            margin-right: 30px;
+        }
+
+        .recipe-list {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .recipe-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .recipe-list li {
+            margin-bottom: 10px;
+        }
+
+        .category-buttons {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .category-buttons form {
+            display: inline-block;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            width: 150px; /* Resmin genişliğini küçültmek için */
+            margin-right: 1300px;
+        }
+
+        .recipe-list img {
+            max-width: 150px;  /* Resmin genişliğini 150 piksel ile sınırlandır */
+            height: auto;      /* Oranları koruyarak yüksekliği otomatik ayarlar */
+        }
+
+        .recipe-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .recipe-card {
+            background-color: #00bfff;
+            color: white;
+            width: 250px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .recipe-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .recipe-card .times {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .recipe-card .title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .recipe-card .recommend-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+
+        .recipe-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .recipe-card:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal img {
+            max-width: 29%;
+            height: auto;
+            margin-bottom: 20px;
+            margin-right: 900px;
+        }
+
+        .modal .times {
+            display: flex;
+            width: 25%;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #00bfff; /* Mavi arka plan rengi */
+            border-radius: 5px;
+            color: white; /* Yazı rengini beyaz yapıyoruz */
+        }
+
+        .modal .times span {
+            display: flex;
+            flex-direction: column; /* İçeriği dikey olarak hizalar */
+            align-items: center; /* Görsel ve yazıyı ortalar */
+            font-size: 16px;
+        }
+
+        .modal .times span img {
+            margin: 0 0 5px 0;
+            margin-right: 5px; /* Görsellerle yazılar arasındaki boşluğu azaltıyoruz */
+            max-width: 200px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .modal .details {
+    display: flex;
+    flex-direction: column; /* İçeriği dikey olarak hizalar */
+    justify-content: center; /* İçeriği ortalar */
+    padding: 20px;
+    background-color: #00bfff; /* Mavi arka plan rengi */
+    border-radius: 5px;
+    color: white; /* Yazı rengini beyaz yapıyoruz */
+}
+
+.modal .details h2 {
+    margin: 0 0 10px 0; /* Başlık ile diğer içerikler arasına boşluk ekler */
+}
+
+.modal .details p {
+    margin: 0 0 15px 0; /* Açıklama ile diğer içerikler arasına boşluk ekler */
+}
+
+.modal .cost-info {
+    display: flex;
+    flex-direction: column; /* İçeriği dikey olarak hizalar */
+}
+
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="baslik">
+        <div class="image-container">
+            <h1><img src="{{ asset('images/QAPERA1.png') }}" alt="Cook Book Image"></h1>
+        </div>
+        <div class="btn-container">
+            <a href="{{ path('app_new_cook_book_categories') }}" class="btn">Kategoriler</a>
+            <a href="{{ path('app_new_cook_book') }}" class="btn">Çıkış Yap</a>
+        </div>
+    </div>
+    <div class="recipe-list">
+        {% for recipe in recipes %}
+            <div class="recipe-card" onclick="openModal('{{ recipe.id }}')">
+                {% if recipe.imageFile %}
+                    <img src="{{ asset('uploads/images/' ~ recipe.imageFile) }}" alt="{{ recipe.title }} Image">
+                {% endif %}
+                <div class="times">
+                    <span><img src="{{ asset('images/pngwing.com.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time1 }} Dk</span>
+                    <span><img src="{{ asset('images/tencere.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time2 }} Dk</span>
+                    <span><img src="{{ asset('images/servis.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time3 }} Dk</span>
+                </div>
+                <div class="title">{{ recipe.title }}</div>
+                <div class="recommend-price">₺ {{ recipe.recommendPrice }}</div>
+            </div>
+
+            <!-- Modal Kutusu -->
+            <div id="modal-{{ recipe.id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('{{ recipe.id }}')">&times;</span>
+                    <img src="{{ asset('uploads/images/' ~ recipe.imageFile) }}" alt="{{ recipe.title }} Image">
+                    <div class="times">
+                        <span><img src="{{ asset('images/pngwing.com.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time1 }} Dk</span>
+                        <span><img src="{{ asset('images/tencere.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time2 }} Dk</span>
+                        <span><img src="{{ asset('images/servis.png') }}" alt="Cook Book Image"></span><span>{{ recipe.time3 }} Dk</span>
+                    </div>
+                    <div class="details">
+                <h2>{{ recipe.title }}</h2>
+                <p>{{ recipe.description }}</p>
+                <div class="cost-info">
+                    <div><strong>Maliyet:</strong> ₺{{ recipe.total }}</div>
+                    <div><strong>Tavsiye Edilen Satış Fiyatı:</strong> ₺{{ recipe.recommendPrice }}</div>
+                    <div><strong>Cost %:</strong> {{ recipe.costPercentage }}%</div>
+                </div>
+            </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="recipe-list"><a href="{{ path('app_create_new_cook_book') }}" class="buton">Add new recipe</a></div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById('modal-' + id).style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById('modal-' + id).style.display = 'none';
+        }
+    </script>
+
+{% endblock %}
+
